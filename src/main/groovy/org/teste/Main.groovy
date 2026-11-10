@@ -1,5 +1,7 @@
 package org.teste
 
+import org.teste.model.Produto
+import org.teste.persistence.Armazenar
 import org.teste.service.Crawler
 import org.teste.service.CrawlerStrategy.OLXStrat
 
@@ -15,7 +17,9 @@ static void task_um(){
     List<String> alvos = [
         /^https:\/\/go\.olx\.com\.br\/grande-goiania-e-anapolis\/celulares\/.*(?i:iphone-11).*/
     ]
+    String url = "https://www.olx.com.br/celulares/estado-go/goiania?q=iphone+11&sp=1&o=1"
 
-    new Crawler(new OLXStrat(), interesses, alvos)
-            .crawl("https://www.olx.com.br/celulares/estado-go/goiania?q=iphone+11&sp=1&o=1")
+    Crawler crawler = new Crawler(new OLXStrat(), interesses, alvos)
+    crawler.crawl(url)
+    new Armazenar(crawler.produtos)
 }
