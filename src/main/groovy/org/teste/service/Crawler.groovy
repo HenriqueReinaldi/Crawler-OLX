@@ -2,6 +2,8 @@ package org.teste.service
 
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.teste.model.Produto
+
 import static org.jsoup.Jsoup.connect
 
 import org.teste.service.CrawlerStrategy.CrawlerStrategy
@@ -39,7 +41,11 @@ class Crawler {
         if (doc == null) return
         visitado.add(url)
 
-        crawler_strategy.scrape(doc, alvos)
+
+        crawler_strategy.scrape(doc, alvos).each { Produto p ->
+            println "${p.preco} - ${p.titulo} (${p.endereco}) | ${p.link}"
+        }
+
 
         doc.select("a[href]").each { Element el ->
             String next_link = el.absUrl("href")
@@ -48,7 +54,7 @@ class Crawler {
             boolean continuar = interesses.any { String interesse -> next_link ==~ interesse }
             if (!continuar) return
 
-            println "\n/!\\encontrado proximo linl: ${next_link} /!\\\n"
+            println "\n/!\\ encontrado proximo INTERESSE: ${next_link} /!\\\n"
             crawl(next_link, depth + 1);
         }
     }

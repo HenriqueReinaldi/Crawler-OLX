@@ -1,7 +1,8 @@
 package org.teste.service.CrawlerStrategy
 
 import org.jsoup.nodes.Document
+import org.teste.model.Produto
 
 interface CrawlerStrategy {
-    int scrape(Document document, List<String> alvos)
+    List<Produto> scrape(Document document, List<String> alvos)
 }

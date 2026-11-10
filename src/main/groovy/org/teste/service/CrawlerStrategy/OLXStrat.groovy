@@ -2,15 +2,21 @@ package org.teste.service.CrawlerStrategy
 
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.teste.model.Produto
 
 class OLXStrat implements CrawlerStrategy {
 
-    private boolean filtro(String produto){
-        return true
+    private static boolean filtro(String produto){
+        //tem "iphone 11", nao tem "carcaça", nao tem "caixa" ou "cabo" como prefixo
+        String filtro = /(?i)^(?!.*carcaça)(?=.*iphone 11)(?!.*(?:caixa|cabo).*iphone 11).*/
+        boolean match = (produto =~ filtro).find()
+        //println match.toString() + " " +  produto
+        return match
     }
 
     @Override
-    int scrape(Document document, List<String> alvos) {
+    List<Produto> scrape(Document document, List<String> alvos) {
+        List<Produto> produtos = []
 
         document.select(".olx-adcard__content").each { Element el ->
             String preco_string = el.select(".olx-adcard__price").text()
@@ -21,9 +27,12 @@ class OLXStrat implements CrawlerStrategy {
             boolean alvo = alvos.any { String alvo -> link_produto  ==~ alvo }
             if (!alvo) return
 
-            println "${preco_string} - ${titulo_produto} (${endereco_produto}) | ${link_produto}"
+            boolean valido = filtro(titulo_produto)
+            if (!valido) return
+
+            produtos << new Produto(titulo_produto, preco_string, endereco_produto, link_produto)
         }
 
-        return 0
+        return produtos
     }
 }
