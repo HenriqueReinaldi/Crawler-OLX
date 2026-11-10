@@ -28,8 +28,7 @@ class Crawler {
                     .timeout(30000)
                     .get()
         } catch (Exception e) {
-            println "/!\\ DEU ERRO COM LINK |${url}|.... TENTANDO DE NOVO! (${tentativa}/${max_retry})/!\\"
-//            e.printStackTrace()
+            println "\n/!\\ DEU ERRO COM LINK |${url}|: ${e.message}.... TENTANDO DE NOVO! (${tentativa}/${max_retry})/!\\\n"
             return request(url, tentativa+1)
         }
     }
@@ -53,7 +52,6 @@ class Crawler {
             crawl(next_link, depth + 1);
         }
     }
-
 
     Crawler(CrawlerStrategy crawler_strategy, List<String> interesses = [], List<String> alvos = [], int max_depth = 5) {
         this.crawler_strategy = crawler_strategy
