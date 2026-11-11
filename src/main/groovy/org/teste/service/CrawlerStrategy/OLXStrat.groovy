@@ -25,6 +25,8 @@ class OLXStrat implements CrawlerStrategy {
             String link_produto = el.select(".olx-adcard__link").attr("href")
             String titulo_produto = el.select(".olx-adcard__link").attr("title")
             String endereco_produto = el.select(".olx-adcard__location").text()
+            String parcelas = el.select(".olx-adcard__price-info-list span.typo-caption.font-bold.inline").text()
+            String data = el.select(".olx-adcard__date").text()
 
             boolean alvo = alvos.any { String alvo -> link_produto  ==~ alvo }
             if (!alvo) return
@@ -32,9 +34,13 @@ class OLXStrat implements CrawlerStrategy {
             boolean valido = filtro(titulo_produto)
             if (!valido) return
 
-            fetcher.fetch(link_produto)
+            //fetcher.fetch(link_produto)
 
-            produtos << new Produto(titulo_produto, preco_string, endereco_produto, link_produto)
+            int preco = preco_string.replace("R\$", "").trim().replace(".", "").replace(",", ".") as int
+
+            Produto prod = new Produto(titulo_produto, preco, endereco_produto, link_produto, parcelas, data)
+            prod.representar()
+            produtos << prod
         }
 
         return produtos

@@ -17,7 +17,6 @@ class Armazenar {
 
         produtos.each { Produto p ->
             p.remover_virgulas_atributos()
-            view.message "${p.titulo} - ${p.preco} || ${p.endereco} || ${p.link}"
             arquivo << "${p.titulo},${p.preco},${p.endereco},${p.link}\n"
         }
     }

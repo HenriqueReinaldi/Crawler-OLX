@@ -25,7 +25,7 @@ class Fetcher {
             return resultado
         } catch (Exception e) {
             view.message "\n/!\\ DEU ERRO COM LINK ${url} : ${e.message}.... TENTANDO DE NOVO! (${tentativa}/${max_retry})/!\\\n"
-            return request(url, tentativa+1)
+            return fetch(url, tentativa+1)
         }
     }
 

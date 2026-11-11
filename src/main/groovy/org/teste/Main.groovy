@@ -1,6 +1,7 @@
 package org.teste
 
 import org.teste.model.Produto
+import org.teste.persistence.Armazenar
 
 //henrique de figueiredo reinaldi
 
@@ -19,8 +20,8 @@ class Main {
 
     static void task_um(){
         List<String> interesses = [
-//            /https:\/\/www\.olx\.com\.br\/estado-go\/goiania\?q=iphone\+11&sp=1&o=2/,
-//            /https:\/\/www\.olx\.com\.br\/estado-go\/goiania\?q=iphone\+11&sp=1&o=3/,
+            /https:\/\/www\.olx\.com\.br\/estado-go\/goiania\?q=iphone\+11&sp=1&o=2/,
+            /https:\/\/www\.olx\.com\.br\/estado-go\/goiania\?q=iphone\+11&sp=1&o=3/,
         ]
         List<String> alvos = [
             /^https:\/\/go\.olx\.com\.br\/grande-goiania-e-anapolis\/celulares\/.*(?i:iphone-11).*/
@@ -30,10 +31,12 @@ class Main {
         Crawler crawler = new Crawler(view, fetcher, new OLXStrat(fetcher), interesses, alvos)
         crawler.crawl(url)
 
-        crawler.produtos.each {Produto p ->
-            p.remover_virgulas_atributos()
-            println "${p.titulo} - ${p.preco} || ${p.endereco} || ${p.link}"
-        }
+        //int media = crawler.produtos.sum { Produto p -> p.preco } / crawler.produtos.size()
+        //crawler.produtos = crawler.produtos.findAll { Produto p -> p.preco <= media }
+//
+//        crawler.produtos.each {Produto p ->
+//            p.representar()
+//        }
         //new Armazenar(view, crawler.produtos)
     }
 }
