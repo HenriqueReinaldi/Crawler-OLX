@@ -1,8 +1,10 @@
 package org.teste.persistence
 
 import org.teste.model.Produto
+import org.teste.view.View
 
 class Armazenar {
+    private View view
     private List<Produto> produtos
     private String arquivo_path
 
@@ -15,12 +17,13 @@ class Armazenar {
 
         produtos.each { Produto p ->
             p.remover_virgulas_atributos()
-            println "${p.titulo} - ${p.preco} || ${p.endereco} || ${p.link}"
+            view.message "${p.titulo} - ${p.preco} || ${p.endereco} || ${p.link}"
             arquivo << "${p.titulo},${p.preco},${p.endereco},${p.link}\n"
         }
     }
 
-    Armazenar(List<Produto> produtos, nome = "celulares.csv", path = "resultado") {
+    Armazenar(View view, List<Produto> produtos, nome = "celulares.csv", path = "resultado") {
+        this.view = view
         this.produtos = produtos
         this.arquivo_path = path + "/" + nome
 

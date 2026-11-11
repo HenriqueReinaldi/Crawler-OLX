@@ -3,8 +3,10 @@ package org.teste.service.CrawlerStrategy
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.teste.model.Produto
+import org.teste.service.Fetcher
 
 class OLXStrat implements CrawlerStrategy {
+    private Fetcher fetcher
 
     private static boolean filtro(String produto){
         //tem "iphone 11", nao tem "carcaça", nao tem "caixa" ou "cabo" como prefixo
@@ -30,9 +32,16 @@ class OLXStrat implements CrawlerStrategy {
             boolean valido = filtro(titulo_produto)
             if (!valido) return
 
+            fetcher.fetch(link_produto)
+
             produtos << new Produto(titulo_produto, preco_string, endereco_produto, link_produto)
         }
 
         return produtos
     }
+
+    OLXStrat(Fetcher fetcher) {
+        this.fetcher = fetcher
+    }
+
 }
