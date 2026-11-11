@@ -20,10 +20,10 @@ class Armazenar {
         }
     }
 
-    Armazenar(List<Produto> produtos, nome = "celulares.csv", path = "../../../../../resultado") {
+    Armazenar(List<Produto> produtos, nome = "celulares.csv", path = "resultado") {
         this.produtos = produtos
         this.arquivo_path = path + "/" + nome
 
-        criar_csv()
+        if (produtos.size() > 0) criar_csv()
     }
 }

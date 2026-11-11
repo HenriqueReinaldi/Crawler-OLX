@@ -1,5 +1,6 @@
 plugins {
     id 'groovy'
+    id 'application'
 }
 
 group = 'org.teste'
@@ -22,4 +23,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = 'org.teste.Main'
 }
