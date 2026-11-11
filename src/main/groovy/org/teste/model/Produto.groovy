@@ -8,7 +8,7 @@ class Produto {
     int preco
     String endereco
     String link
-    String parcelas
+    int parcelas
     String data_anuncio
 
     String descricao
@@ -20,7 +20,10 @@ class Produto {
     }
     
     void representar(){
-        println "${titulo} - [${preco}]"
+        println "${titulo}"
+        println "    preço: ${preco} | parcelas: ${parcelas}"
+        println "    endereco: ${endereco} | data: ${data_anuncio}"
+        println "    link: ${link}\n"
     }
     
 }
