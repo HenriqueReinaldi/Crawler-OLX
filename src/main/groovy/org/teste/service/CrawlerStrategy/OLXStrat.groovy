@@ -3,7 +3,7 @@ package org.teste.service.CrawlerStrategy
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.teste.model.Produto
-import org.teste.service.Fetcher
+import org.teste.service.FetcherStrategy.Fetcher
 
 class OLXStrat implements CrawlerStrategy {
     private Fetcher fetcher

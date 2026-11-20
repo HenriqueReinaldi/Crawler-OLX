@@ -3,6 +3,7 @@ package org.teste.service
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.teste.model.Produto
+import org.teste.service.FetcherStrategy.Fetcher
 import org.teste.view.View
 
 import org.teste.service.CrawlerStrategy.CrawlerStrategy

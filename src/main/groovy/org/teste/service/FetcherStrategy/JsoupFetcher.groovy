@@ -1,14 +1,15 @@
-package org.teste.service
+package org.teste.service.FetcherStrategy
 
 import org.jsoup.nodes.Document
 import org.teste.view.View
 
 import static org.jsoup.Jsoup.connect
 
-class Fetcher {
+class JsoupFetcher implements Fetcher {
     private View view
     private int max_retry = 5
 
+    @Override
     Document fetch(String url, int tentativa = 1) {
         if (tentativa > max_retry) return null
         if (tentativa > 1) Thread.sleep(1000)
@@ -29,7 +30,7 @@ class Fetcher {
         }
     }
 
-    Fetcher(View view, max_retry = 5) {
+    JsoupFetcher(View view, max_retry = 5) {
         this.view = view
         this.max_retry = max_retry
     }
